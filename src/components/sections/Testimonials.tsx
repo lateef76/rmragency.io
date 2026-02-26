@@ -341,7 +341,6 @@ const Testimonials: React.FC = () => {
         </motion.div>
 
         {/* Trust Badges */}
-
       </div>
     </section>
   );

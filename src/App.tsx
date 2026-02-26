@@ -4,6 +4,7 @@ import Services from "./components/sections/Services";
 import Portfolio from "./components/sections/Portfolio";
 import Testimonials from "./components/sections/Testimonials";
 import Blog from "./components/sections/Blog";
+import Contact from "./components/sections/Contact";
 function App() {
   return (
     <div className="min-h-screen">
@@ -12,6 +13,7 @@ function App() {
       <Portfolio />
       <Testimonials />
       <Blog />
+      <Contact/>
     </div>
   );
 }
