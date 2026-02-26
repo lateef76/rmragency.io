@@ -1,5 +1,4 @@
 import React from "react";
-import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
@@ -277,10 +276,10 @@ const Services: React.FC = () => {
           className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
-            { number: 50, suffix: "+", label: "AI Models", icon: FaBrain },
-            { number: 100, suffix: "+", label: "Websites", icon: FaLaptopCode },
-            { number: 200, suffix: "+", label: "Automations", icon: FaRobot },
-            { number: 98, suffix: "%", label: "Client Satisfaction", icon: FaUsers },
+            { number: "50+", label: "AI Models", icon: FaBrain },
+            { number: "100+", label: "Websites", icon: FaLaptopCode },
+            { number: "200+", label: "Automations", icon: FaRobot },
+            { number: "98%", label: "Client Satisfaction", icon: FaUsers },
           ].map((stat, index) => (
             <motion.div
               key={index}
@@ -289,7 +288,7 @@ const Services: React.FC = () => {
             >
               <stat.icon className="w-8 h-8 mx-auto text-primary-600 mb-3" />
               <div className="text-3xl font-bold text-gray-900">
-                <CountUp end={stat.number} duration={2} suffix={stat.suffix} />
+                {stat.number}
               </div>
               <div className="text-gray-600">{stat.label}</div>
             </motion.div>

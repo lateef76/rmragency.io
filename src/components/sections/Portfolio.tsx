@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-// @ts-expect-error: No type definitions for react-lazy-load-image-component
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import {
@@ -42,59 +42,6 @@ const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState<string>("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  // For swipe support
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
-
-  // Move nextImage/prevImage above useEffect to avoid TDZ
-  const nextImage = React.useCallback(() => {
-    if (selectedProject) {
-      setCurrentImageIndex((prev) =>
-        prev === selectedProject.images.length - 1 ? 0 : prev + 1,
-      );
-    }
-  }, [selectedProject]);
-
-  const prevImage = React.useCallback(() => {
-    if (selectedProject) {
-      setCurrentImageIndex((prev) =>
-        prev === 0 ? selectedProject.images.length - 1 : prev - 1,
-      );
-    }
-  }, [selectedProject]);
-
-  // Handle swipe for modal image gallery
-  useEffect(() => {
-    if (!selectedProject) return;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartX.current = e.touches[0].clientX;
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      touchEndX.current = e.touches[0].clientX;
-    };
-    const handleTouchEnd = () => {
-      if (touchStartX.current !== null && touchEndX.current !== null) {
-        const diff = touchStartX.current - touchEndX.current;
-        if (diff > 50) nextImage();
-        if (diff < -50) prevImage();
-      }
-      touchStartX.current = null;
-      touchEndX.current = null;
-    };
-    const modal = document.getElementById("portfolio-modal-gallery");
-    if (modal) {
-      modal.addEventListener("touchstart", handleTouchStart);
-      modal.addEventListener("touchmove", handleTouchMove);
-      modal.addEventListener("touchend", handleTouchEnd);
-    }
-    return () => {
-      if (modal) {
-        modal.removeEventListener("touchstart", handleTouchStart);
-        modal.removeEventListener("touchmove", handleTouchMove);
-        modal.removeEventListener("touchend", handleTouchEnd);
-      }
-    };
-  }, [selectedProject, currentImageIndex, nextImage, prevImage]);
 
   const categories = [
     { id: "all", label: "All Projects", icon: null },
@@ -278,19 +225,39 @@ const Portfolio: React.FC = () => {
   const openLightbox = (project: Project, index: number) => {
     setSelectedProject(project);
     setCurrentImageIndex(index);
-    setTimeout(() => {
-      document.body.style.overflow = "hidden";
-    }, 0);
   };
+  // Lock body scroll when modal is open
+  React.useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedProject]);
 
   const closeLightbox = () => {
     setSelectedProject(null);
-    setTimeout(() => {
-      document.body.style.overflow = "unset";
-    }, 0);
+    document.body.style.overflow = "unset";
   };
 
-  // (Removed duplicate nextImage/prevImage declarations)
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) =>
+        prev === selectedProject.images.length - 1 ? 0 : prev + 1,
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? selectedProject.images.length - 1 : prev - 1,
+      );
+    }
+  };
 
   return (
     <>
@@ -486,12 +453,11 @@ const Portfolio: React.FC = () => {
 
               <div className="flex flex-col lg:flex-row h-full">
                 {/* Image Gallery */}
-                <div id="portfolio-modal-gallery" className="lg:w-3/5 h-64 lg:h-auto relative bg-gray-900 touch-pan-x">
+                <div className="lg:w-3/5 h-64 lg:h-auto relative bg-gray-900">
                   <LazyLoadImage
                     src={selectedProject.images[currentImageIndex]}
                     alt={selectedProject.title}
-                    className="w-full h-full object-contain select-none"
-                    draggable={false}
+                    className="w-full h-full object-contain"
                   />
 
                   {/* Navigation Arrows */}
@@ -514,9 +480,7 @@ const Portfolio: React.FC = () => {
 
                   {/* Image Counter */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-white text-sm">
-                    <span aria-live="polite" aria-atomic="true">
-                      {currentImageIndex + 1} / {selectedProject.images.length}
-                    </span>
+                    {currentImageIndex + 1} / {selectedProject.images.length}
                   </div>
                 </div>
 
@@ -580,8 +544,6 @@ const Portfolio: React.FC = () => {
                         <span
                           key={index}
                           className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700"
-                          tabIndex={0}
-                          aria-label={tech}
                         >
                           {tech}
                         </span>
