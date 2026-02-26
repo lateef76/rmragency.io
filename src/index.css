@@ -56,3 +56,9 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+@layer components {
+  .gradient-text {
+    @apply bg-linear-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+  }
+}

@@ -27,7 +27,8 @@ const Hero: React.FC = () => {
             <Typewriter />
           </div>
           <p className="text-base md:text-lg text-blue-100 mb-6 max-w-xl">
-            We build beautiful, high-performance websites and intelligent AI automations that drive real results for your business.
+            We build beautiful, high-performance websites and intelligent AI
+            automations that drive real results for your business.
           </p>
           <motion.div
             whileHover={{ scale: 1.07, boxShadow: "0 0 16px #38bdf8" }}
