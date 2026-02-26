@@ -53,13 +53,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       <motion.div
         whileHover={{ rotateY: 5, rotateX: 5 }}
         transition={{ duration: 0.5 }}
-        className="relative w-full h-100 preserve-3d cursor-pointer"
+        className="relative w-full h-[400px] preserve-3d cursor-pointer"
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Front Face */}
         <div className="absolute inset-0 backface-hidden">
           <div
-            className={`h-full bg-linear-to-br ${color} rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/20 backdrop-blur-sm`}
+            className={`h-full bg-gradient-to-br ${color} rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/20 backdrop-blur-sm`}
           >
             {/* Icon with animated background */}
             <div className="relative mb-6">
@@ -117,7 +117,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           style={{ transform: "rotateY(180deg)" }}
         >
           <div
-            className={`h-full bg-linear-to-br ${color} rounded-2xl p-8 shadow-xl border border-white/20`}
+            className={`h-full bg-gradient-to-br ${color} rounded-2xl p-8 shadow-xl border border-white/20`}
           >
             {/* Back Content */}
             <h4 className="text-xl font-bold text-white mb-4">Features</h4>
@@ -238,7 +238,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-linear-to-b from-gray-50 to-white overflow-hidden">
+    <section className="py-24 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
       <div className="container-custom">
         {/* Section Header */}
         <motion.div

@@ -82,48 +82,6 @@ const Testimonials: React.FC = () => {
       website: "https://ecosmart.com",
       projectType: "E-commerce Website",
     },
-    {
-      id: 3,
-      name: "Emily Rodriguez",
-      position: "Operations Director",
-      company: "MediCare Plus",
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80",
-      content:
-        "The workflow automation system saved us 40+ hours per week in manual data entry. Now our staff can focus on patient care instead of paperwork. RMR understood our needs perfectly.",
-      rating: 5,
-      linkedin: "https://linkedin.com",
-      website: "https://medicare.com",
-      projectType: "AI Automation",
-    },
-    {
-      id: 4,
-      name: "David Kim",
-      position: "Marketing Head",
-      company: "GrowthGenius",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80",
-      content:
-        "The analytics dashboard gave us insights we never had before. We're now making data-driven decisions that have increased our ROI by 200%. The predictive analytics are incredibly accurate.",
-      rating: 4.5,
-      linkedin: "https://linkedin.com",
-      twitter: "https://twitter.com",
-      projectType: "AI Analytics",
-    },
-    {
-      id: 5,
-      name: "Lisa Thompson",
-      position: "CEO",
-      company: "RetailPro",
-      image:
-        "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80",
-      content:
-        "Working with RMR Agency was the best decision we made this year. Their team doesn't just deliver code—they deliver business value. Our customer satisfaction scores are at an all-time high.",
-      rating: 5,
-      linkedin: "https://linkedin.com",
-      website: "https://retailpro.com",
-      projectType: "Full Stack Development",
-    },
   ];
 
   const stats: StatItem[] = [
@@ -383,27 +341,7 @@ const Testimonials: React.FC = () => {
         </motion.div>
 
         {/* Trust Badges */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-32 text-center"
-        >
-          <p className="text-gray-500 mb-8">
-            Trusted by innovative companies worldwide
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12 opacity-50">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="h-8 w-24 bg-gray-300 rounded animate-pulse"
-              ></div>
-            ))}
-          </div>
-          <p className="text-xs text-gray-400 mt-4">
-            (Company logos will be added here)
-          </p>
-        </motion.div>
+
       </div>
     </section>
   );
