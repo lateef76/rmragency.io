@@ -60,8 +60,8 @@ const Contact: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    watch,
     setValue,
+    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -71,10 +71,10 @@ const Contact: React.FC = () => {
     },
   });
 
-  const selectedService = watch("service");
-  const selectedTimeline = watch("timeline");
-  // React Compiler warning: watch() cannot be memoized safely, but this is safe for this usage.
-  // If you want to avoid the warning, you can move these inside the component body or use useWatch from react-hook-form if available.
+  // Remove memoized variables for watch to avoid React Compiler warning
+  // Use watch directly where needed instead of assigning to selectedService/selectedTimeline
+  // Example usage: services.find((s) => s.value === watch("service"))
+  // and timelines.find((t) => t.value === watch("timeline"))
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -128,10 +128,10 @@ const Contact: React.FC = () => {
     // Simulate AI generating a message based on selected options
     setTimeout(() => {
       const serviceLabel =
-        services.find((s) => s.value === selectedService)?.label ||
+        services.find((s) => s.value === watch("service"))?.label ||
         "your project";
       const timelineLabel =
-        timelines.find((t) => t.value === selectedTimeline)?.label || "soon";
+        timelines.find((t) => t.value === watch("timeline"))?.label || "soon";
 
       const suggestedMessage = `I'm interested in discussing ${serviceLabel} for our company. We're looking to get started ${timelineLabel}. I'd love to learn more about your approach and how you've helped similar businesses. Could we schedule a call to discuss further?`;
 
@@ -431,7 +431,7 @@ const Contact: React.FC = () => {
                         <label
                           key={service.value}
                           className={`relative flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ${
-                            selectedService === service.value
+                            watch("service") === service.value
                               ? "border-primary-600 bg-primary-50"
                               : "border-gray-200 hover:border-primary-300"
                           }`}
@@ -444,14 +444,14 @@ const Contact: React.FC = () => {
                           />
                           <service.icon
                             className={`w-4 h-4 ${
-                              selectedService === service.value
+                              watch("service") === service.value
                                 ? "text-primary-600"
                                 : "text-gray-400"
                             }`}
                           />
                           <span
                             className={`text-sm ${
-                              selectedService === service.value
+                              watch("service") === service.value
                                 ? "text-primary-600 font-medium"
                                 : "text-gray-700"
                             }`}
@@ -503,7 +503,7 @@ const Contact: React.FC = () => {
                               )
                             }
                             className={`px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
-                              selectedTimeline === timeline.value
+                              watch("timeline") === timeline.value
                                 ? `bg-${timeline.color}-500 text-white border-${timeline.color}-500`
                                 : "border-gray-200 text-gray-700 hover:border-gray-300"
                             }`}

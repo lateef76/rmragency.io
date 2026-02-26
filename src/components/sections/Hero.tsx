@@ -7,7 +7,10 @@ import SocialIcons from "../ui/SocialIcons";
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-linear-to-br from-gray-900 via-blue-900 to-blue-600 overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center overflow-hidden bg-linear-to-br from-gray-900 via-primary-900 to-secondary-900"
+    >
       <div className="container mx-auto px-4 py-16 flex flex-col-reverse md:flex-row items-center gap-12 z-10">
         {/* Left Side: Text */}
         <motion.div
